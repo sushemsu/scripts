@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+#$(ps -p $(pidof $(which qemu-system-x86_64)) | grep -o -e "-name [a-zA-Z0-9]*" -e "-vnc :[0-9]*" |  tr -d '\n' | sed 's/-vnc \(:[0-9]*\)/ \1\n/g' | sed 's/-name//g')
+for host in $(ps -p $(pidof $(which qemu-system-x86_64)) | grep -o -e "-name [a-zA-Z0-9]*" | tr -d '\n' | sed 's/-name//g'); do
+	builtin	echo -e "\033[1;34m${host}\033[4;37m\t\033[0;31mIP:$(host ${host}.sushemsu 10.0.0.64 | grep -o address\ [0-9]*\\.[0-9]*\\.[0-9]*\\.[0-9]*| sed 's/address\ //')\033[4;37m\t\033[0;35m$(grep -o vnc\ :[0-9]* /etc/conf.d/qemu.d/${host})\033[0;0m";
+done
